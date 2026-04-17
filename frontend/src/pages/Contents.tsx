@@ -540,7 +540,7 @@ export default function Contents() {
                         </span>
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '10px' }}>
+                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
                       <button
                         onClick={() => {
                           setSelectedContent(content)
@@ -558,34 +558,57 @@ export default function Contents() {
                           alignItems: 'center',
                           gap: '6px',
                           fontWeight: 'bold',
+                          whiteSpace: 'nowrap',
                         }}
                       >
                         <Eye size={16} />
                         Ver
                       </button>
                       {content.status === 'generated' && (
-                        <button
-                          onClick={() => {
-                            setSelectedContent(content)
-                            setShowScheduleModal(true)
-                          }}
-                          style={{
-                            backgroundColor: '#fbbf24',
-                            color: '#000',
-                            border: 'none',
-                            padding: '10px 15px',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            fontWeight: 'bold',
-                          }}
-                        >
-                          <Clock size={16} />
-                          Agendar
-                        </button>
+                        <>
+                          <button
+                            onClick={() => handleSendNow(content.id)}
+                            style={{
+                              backgroundColor: '#10b981',
+                              color: '#fff',
+                              border: 'none',
+                              padding: '10px 15px',
+                              borderRadius: '6px',
+                              cursor: 'pointer',
+                              fontSize: '14px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              fontWeight: 'bold',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            ✉️ Enviar Agora
+                          </button>
+                          <button
+                            onClick={() => {
+                              setSelectedContent(content)
+                              setShowScheduleModal(true)
+                            }}
+                            style={{
+                              backgroundColor: '#fbbf24',
+                              color: '#000',
+                              border: 'none',
+                              padding: '10px 15px',
+                              borderRadius: '6px',
+                              cursor: 'pointer',
+                              fontSize: '14px',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '6px',
+                              fontWeight: 'bold',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            <Clock size={16} />
+                            Agendar
+                          </button>
+                        </>
                       )}
                       {content.status === 'scheduled' && (
                         <button
@@ -602,30 +625,11 @@ export default function Contents() {
                             alignItems: 'center',
                             gap: '6px',
                             fontWeight: 'bold',
+                            whiteSpace: 'nowrap',
                           }}
                         >
                           <Trash2 size={16} />
                           Cancelar
-                        </button>
-                      )}
-                      {content.status === 'generated' && (
-                        <button
-                          onClick={() => handleSendNow(content.id)}
-                          style={{
-                            backgroundColor: '#10b981',
-                            color: '#fff',
-                            border: 'none',
-                            padding: '10px 15px',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            fontSize: '14px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            fontWeight: 'bold',
-                          }}
-                        >
-                          ✉️ Enviar Agora
                         </button>
                       )}
                     </div>
