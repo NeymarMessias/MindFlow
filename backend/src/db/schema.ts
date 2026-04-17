@@ -179,3 +179,45 @@ export const preferences = mysqlTable(
     userIdIdx: index('idx_user_id').on(table.userId),
   })
 )
+
+
+// Content Feedback Table (5-star ratings)
+export const contentFeedback = mysqlTable(
+  'content_feedback',
+  {
+    id: varchar('id', { length: 36 }).primaryKey(),
+    contentId: varchar('content_id', { length: 36 }).notNull(),
+    contactId: varchar('contact_id', { length: 36 }).notNull(),
+    rating: int('rating').notNull(), // 1-5 stars
+    theme: varchar('theme', { length: 100 }).notNull(),
+    feedback: text('feedback'), // Optional comment
+    createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow(),
+  },
+  (table) => ({
+    contentIdIdx: index('idx_content_id').on(table.contentId),
+    contactIdIdx: index('idx_contact_id').on(table.contactId),
+    themeIdx: index('idx_theme').on(table.theme),
+    ratingIdx: index('idx_rating').on(table.rating),
+  })
+)
+
+// Contact Theme Preferences Table
+export const contactThemePreferences = mysqlTable(
+  'contact_theme_preferences',
+  {
+    id: varchar('id', { length: 36 }).primaryKey(),
+    contactId: varchar('contact_id', { length: 36 }).notNull(),
+    theme: varchar('theme', { length: 100 }).notNull(),
+    averageRating: int('average_rating').default(0), // Average of all ratings for this theme
+    totalFeedback: int('total_feedback').default(0), // Count of feedback received
+    status: mysqlEnum('status', ['active', 'inactive']).default('active'),
+    createdAt: timestamp('created_at').default(sql`CURRENT_TIMESTAMP`),
+    updatedAt: timestamp('updated_at').default(sql`CURRENT_TIMESTAMP`).onUpdateNow(),
+  },
+  (table) => ({
+    contactIdIdx: index('idx_contact_id').on(table.contactId),
+    themeIdx: index('idx_theme').on(table.theme),
+    averageRatingIdx: index('idx_average_rating').on(table.averageRating),
+  })
+)

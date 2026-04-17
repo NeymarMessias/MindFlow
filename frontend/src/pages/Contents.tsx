@@ -36,6 +36,9 @@ export default function Contents() {
   const [showScheduleModal, setShowScheduleModal] = useState(false)
   const [scheduleDate, setScheduleDate] = useState('')
   const [scheduleTime, setScheduleTime] = useState('')
+  const [showFeedbackModal, setShowFeedbackModal] = useState(false)
+  const [feedbackRating, setFeedbackRating] = useState(0)
+  const [feedbackText, setFeedbackText] = useState('')
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
   const menuItems = [
@@ -196,6 +199,75 @@ export default function Contents() {
     } catch (error) {
       console.error('Error deleting content:', error)
       setMessage({ type: 'error', text: 'Erro ao deletar conteúdo' })
+    }
+  }
+
+  const handleSendNow = async (contentId: string) => {
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch(
+        'https://3001-ixt97axeriathjorjukza-00138937.us2.manus.computer/api/immediate/send-all',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ contentId }),
+        }
+      )
+
+      if (!response.ok) throw new Error('Erro ao enviar')
+
+      const data = await response.json()
+      setMessage({ type: 'success', text: `✅ Enviado para ${data.successCount} contatos!` })
+      setContents(
+        contents.map((c) =>
+          c.id === contentId ? { ...c, status: 'sent', sentAt: new Date().toISOString() } : c
+        )
+      )
+      setTimeout(() => setMessage(null), 3000)
+    } catch (error) {
+      console.error('Error sending now:', error)
+      setMessage({ type: 'error', text: 'Erro ao enviar conteúdo' })
+    }
+  }
+
+  const handleSubmitFeedback = async () => {
+    if (feedbackRating === 0) {
+      setMessage({ type: 'error', text: 'Selecione uma classificação' })
+      return
+    }
+
+    try {
+      const token = localStorage.getItem('token')
+      const response = await fetch(
+        'https://3001-ixt97axeriathjorjukza-00138937.us2.manus.computer/api/immediate/feedback',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            contentId: selectedContent?.id,
+            contactId: 'default-contact', // Será substituído com ID real do contato
+            rating: feedbackRating,
+            feedback: feedbackText,
+          }),
+        }
+      )
+
+      if (!response.ok) throw new Error('Erro ao enviar feedback')
+
+      setMessage({ type: 'success', text: `⭐ Obrigado! Feedback de ${feedbackRating} estrelas registrado!` })
+      setShowFeedbackModal(false)
+      setFeedbackRating(0)
+      setFeedbackText('')
+      setTimeout(() => setMessage(null), 3000)
+    } catch (error) {
+      console.error('Error submitting feedback:', error)
+      setMessage({ type: 'error', text: 'Erro ao enviar feedback' })
     }
   }
 
@@ -536,6 +608,26 @@ export default function Contents() {
                           Cancelar
                         </button>
                       )}
+                      {content.status === 'generated' && (
+                        <button
+                          onClick={() => handleSendNow(content.id)}
+                          style={{
+                            backgroundColor: '#10b981',
+                            color: '#fff',
+                            border: 'none',
+                            padding: '10px 15px',
+                            borderRadius: '6px',
+                            cursor: 'pointer',
+                            fontSize: '14px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            fontWeight: 'bold',
+                          }}
+                        >
+                          ✉️ Enviar Agora
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -744,6 +836,136 @@ export default function Contents() {
               </button>
               <button
                 onClick={() => setShowScheduleModal(false)}
+                style={{
+                  flex: 1,
+                  backgroundColor: '#2d3561',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Feedback Modal */}
+      {showFeedbackModal && selectedContent && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 2000,
+          }}
+          onClick={() => setShowFeedbackModal(false)}
+        >
+          <div
+            style={{
+              backgroundColor: '#1a1f3a',
+              borderRadius: '12px',
+              padding: '30px',
+              maxWidth: '500px',
+              border: '1px solid #2d3561',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+              <h2 style={{ color: '#fff', margin: 0, fontSize: '24px', fontWeight: 'bold' }}>
+                Avaliar Conteúdo
+              </h2>
+              <button
+                onClick={() => setShowFeedbackModal(false)}
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#fff',
+                  border: 'none',
+                  fontSize: '24px',
+                  cursor: 'pointer',
+                }}
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <p style={{ color: '#8b92b8', marginBottom: '15px' }}>
+                Como você avalia este conteúdo?
+              </p>
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginBottom: '20px' }}>
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <button
+                    key={star}
+                    onClick={() => setFeedbackRating(star)}
+                    style={{
+                      fontSize: '32px',
+                      backgroundColor: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                      opacity: feedbackRating >= star ? 1 : 0.3,
+                      transition: 'opacity 0.2s',
+                    }}
+                  >
+                    ⭐
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ color: '#8b92b8', fontSize: '14px', display: 'block', marginBottom: '8px' }}>
+                Comentário (opcional)
+              </label>
+              <textarea
+                value={feedbackText}
+                onChange={(e) => setFeedbackText(e.target.value)}
+                placeholder="Deixe seu feedback..."
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  backgroundColor: '#0a0e27',
+                  color: '#fff',
+                  border: '1px solid #2d3561',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  boxSizing: 'border-box',
+                  minHeight: '100px',
+                  fontFamily: 'inherit',
+                }}
+              />
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button
+                onClick={handleSubmitFeedback}
+                style={{
+                  flex: 1,
+                  backgroundColor: '#ff6b35',
+                  color: '#fff',
+                  border: 'none',
+                  padding: '12px',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                }}
+              >
+                Enviar Avaliação
+              </button>
+              <button
+                onClick={() => setShowFeedbackModal(false)}
                 style={{
                   flex: 1,
                   backgroundColor: '#2d3561',

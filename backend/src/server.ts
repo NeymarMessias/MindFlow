@@ -43,6 +43,7 @@ export async function startServer() {
   app.use('/api/stats', (await import('./routes/stats.js')).default)
   app.use('/api/themes', (await import('./routes/themes.js')).default)
   app.use('/api/content', (await import('./routes/content.js')).default)
+  app.use('/api/immediate', (await import('./routes/immediate.js')).default)
   app.use('/api/webhooks', webhookRoutes)
 
   // Health check
