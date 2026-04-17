@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindFlow - Geração de Conteúdo com IA para WhatsApp</title>
-    <meta name="description" content="Crie conteúdos estratégicos com IA e distribua via WhatsApp. Aumente suas vendas com MindFlow.">
-    <meta name="keywords" content="conteúdo, IA, WhatsApp, marketing, automação">
-    <meta property="og:title" content="MindFlow - Geração de Conteúdo com IA">
-    <meta property="og:description" content="Crie conteúdos estratégicos com IA e distribua via WhatsApp">
+    <title>MindFlow - Conteúdo Diário de Qualidade no WhatsApp</title>
+    <meta name="description" content="Receba conteúdo estratégico sobre Tecnologia, Negócios e Marketing diariamente no WhatsApp. Aprenda, cresça e fique sempre atualizado.">
+    <meta name="keywords" content="conteúdo, aprendizado, WhatsApp, tecnologia, negócios, marketing">
+    <meta property="og:title" content="MindFlow - Conteúdo Diário de Qualidade">
+    <meta property="og:description" content="Receba conteúdo estratégico sobre Tecnologia, Negócios e Marketing diariamente no WhatsApp">
     <meta property="og:image" content="https://d2xsxph8kpxj0f.cloudfront.net/310519663155394132/4FYPryX6mcovAcZutfZHmJ/mindflow-hero-Ti6YuCv5UPScFNMt5iijXM.webp">
     <style>
         * {
@@ -75,7 +75,7 @@
         }
 
         .logo::before {
-            content: "🧠";
+            content: "📚";
             font-size: 1.8rem;
         }
 
@@ -269,30 +269,90 @@
             line-height: 1.7;
         }
 
-        /* Features Section */
-        .features {
+        /* Topics Section */
+        .topics {
             padding: 6rem 2rem;
             background: linear-gradient(135deg, #f5f7ff 0%, #fff5f0 100%);
         }
 
-        .features-image {
-            margin: 3rem 0;
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
         }
 
-        .features-image img {
-            width: 100%;
-            max-width: 800px;
-            height: auto;
+        .topic-card {
+            padding: 2rem;
+            background: white;
             border-radius: 12px;
-            box-shadow: var(--shadow-lg);
-            margin: 0 auto;
-            display: block;
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .topic-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .topic-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 2rem;
+            background: var(--bg-white);
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), #0052a3);
+            color: white;
+            border-radius: 50%;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .step p {
+            color: var(--text-light);
+            line-height: 1.7;
         }
 
         /* Testimonials Section */
         .testimonials {
             padding: 6rem 2rem;
-            background: var(--bg-white);
+            background: linear-gradient(135deg, #f5f7ff 0%, #fff5f0 100%);
         }
 
         .testimonials-grid {
@@ -303,9 +363,10 @@
 
         .testimonial-card {
             padding: 2rem;
-            background: var(--bg-light);
+            background: white;
             border-radius: 12px;
-            border-left: 4px solid var(--primary);
+            border-left: 4px solid var(--success);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
         .testimonial-stars {
@@ -463,10 +524,10 @@
         <div class="header-container">
             <a href="#" class="logo">MindFlow</a>
             <nav>
-                <a href="#beneficios">Benefícios</a>
-                <a href="#recursos">Recursos</a>
+                <a href="#beneficios">Por que se juntar</a>
+                <a href="#temas">Temas</a>
+                <a href="#como-funciona">Como Funciona</a>
                 <a href="#depoimentos">Depoimentos</a>
-                <a href="#contato">Contato</a>
             </nav>
         </div>
     </header>
@@ -476,23 +537,23 @@
         <div class="hero-container">
             <div class="hero-content">
                 <h1>
-                    Crie <span class="highlight">Conteúdo com IA</span> e Distribua via <span class="highlight">WhatsApp</span>
+                    Receba <span class="highlight">Conteúdo de Qualidade</span> Diariamente no <span class="highlight">WhatsApp</span>
                 </h1>
                 <p>
-                    Aumente suas vendas automatizando a geração e distribuição de conteúdos estratégicos. 
-                    Receba feedback em tempo real e personalize sua estratégia.
+                    Aprenda sobre Tecnologia, Negócios e Marketing com conteúdos estratégicos criados por IA. 
+                    Fique sempre atualizado e cresça profissionalmente todos os dias.
                 </p>
                 <div class="cta-buttons">
-                    <button class="btn btn-primary" onclick="window.location.href='https://wa.me/5533988421335?text=Olá! Gostaria de conhecer mais sobre o MindFlow'">
+                    <button class="btn btn-primary" onclick="window.location.href='https://wa.me/5533988421335?text=Olá! Quero receber conteúdo diário de qualidade no MindFlow'">
                         💬 Começar Agora
                     </button>
-                    <button class="btn btn-secondary" onclick="document.getElementById('recursos').scrollIntoView()">
+                    <button class="btn btn-secondary" onclick="document.getElementById('beneficios').scrollIntoView()">
                         Saiba Mais →
                     </button>
                 </div>
             </div>
             <div class="hero-image">
-                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663155394132/4FYPryX6mcovAcZutfZHmJ/mindflow-hero-Ti6YuCv5UPScFNMt5iijXM.webp" alt="MindFlow Dashboard">
+                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663155394132/4FYPryX6mcovAcZutfZHmJ/mindflow-hero-Ti6YuCv5UPScFNMt5iijXM.webp" alt="MindFlow - Conteúdo Diário">
             </div>
         </div>
     </section>
@@ -500,84 +561,105 @@
     <!-- Benefits Section -->
     <section class="benefits" id="beneficios">
         <div class="section-container">
-            <h2 class="section-title">Por que escolher MindFlow?</h2>
-            <p class="section-subtitle">Transforme sua estratégia de conteúdo com tecnologia de IA</p>
+            <h2 class="section-title">Por que se juntar ao MindFlow?</h2>
+            <p class="section-subtitle">Benefícios reais para seu crescimento profissional</p>
             
             <div class="benefits-grid">
                 <div class="benefit-card">
-                    <div class="benefit-icon">⚡</div>
-                    <h3>Geração Automática</h3>
-                    <p>Crie artigos de qualidade em segundos com IA avançada. Sem necessidade de escrever manualmente.</p>
+                    <div class="benefit-icon">📚</div>
+                    <h3>Aprendizado Contínuo</h3>
+                    <p>Receba conteúdo novo e relevante todos os dias. Aprenda sem sair do WhatsApp.</p>
                 </div>
                 <div class="benefit-card">
-                    <div class="benefit-icon">📱</div>
-                    <h3>Distribuição WhatsApp</h3>
-                    <p>Envie conteúdo para seus contatos diretamente no WhatsApp. Alcance garantida e sem spam.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">⭐</div>
-                    <h3>Feedback Inteligente</h3>
-                    <p>Colete avaliações com 5 estrelas e entenda o que seus clientes realmente querem.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">📊</div>
-                    <h3>Analytics em Tempo Real</h3>
-                    <p>Visualize métricas, preferências e ROI em um dashboard intuitivo e poderoso.</p>
+                    <div class="benefit-icon">⏰</div>
+                    <h3>Economize Tempo</h3>
+                    <p>Conteúdo resumido e direto ao ponto. Sem perder tempo procurando informações.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🎯</div>
-                    <h3>Personalização</h3>
-                    <p>Aprenda as preferências de cada cliente e envie conteúdo relevante automaticamente.</p>
+                    <h3>Conteúdo Personalizado</h3>
+                    <p>Receba temas que realmente interessam a você. Sua voz importa.</p>
                 </div>
                 <div class="benefit-card">
                     <div class="benefit-icon">🚀</div>
-                    <h3>Escalabilidade</h3>
-                    <p>Cresça de 10 para 10.000 contatos sem complicações. Infraestrutura pronta para escala.</p>
+                    <h3>Cresça Profissionalmente</h3>
+                    <p>Fique atualizado com tendências do mercado. Destaque-se na sua carreira.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">💡</div>
+                    <h3>Ideias Inovadoras</h3>
+                    <p>Descubra novas perspectivas sobre Tecnologia, Negócios e Marketing.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">🤝</div>
+                    <h3>Comunidade</h3>
+                    <p>Faça parte de uma comunidade de profissionais em busca de crescimento.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features" id="recursos">
+    <!-- Topics Section -->
+    <section class="topics" id="temas">
         <div class="section-container">
-            <h2 class="section-title">Funcionalidades Poderosas</h2>
-            <p class="section-subtitle">Tudo que você precisa para dominar o marketing de conteúdo</p>
+            <h2 class="section-title">Temas que Você Vai Receber</h2>
+            <p class="section-subtitle">Conteúdo estratégico sobre os temas mais relevantes</p>
             
-            <div class="features-image">
-                <img src="https://d2xsxph8kpxj0f.cloudfront.net/310519663155394132/4FYPryX6mcovAcZutfZHmJ/mindflow-features-YVE9TNhogYPTraMjwzbdpd.webp" alt="MindFlow Features">
+            <div class="topics-grid">
+                <div class="topic-card">
+                    <h3>💻 Tecnologia</h3>
+                    <p>IA, Cloud Computing, Segurança, Desenvolvimento, Tendências Tech e muito mais.</p>
+                </div>
+                <div class="topic-card">
+                    <h3>📈 Negócios</h3>
+                    <p>Empreendedorismo, Estratégia, Gestão, Inovação e Crescimento empresarial.</p>
+                </div>
+                <div class="topic-card">
+                    <h3>📢 Marketing</h3>
+                    <p>Digital Marketing, Social Media, Branding, SEO, Copywriting e Conversão.</p>
+                </div>
+                <div class="topic-card">
+                    <h3>💰 Finanças</h3>
+                    <p>Investimentos, Planejamento Financeiro, Economia e Oportunidades.</p>
+                </div>
+                <div class="topic-card">
+                    <h3>🎓 Educação</h3>
+                    <p>Desenvolvimento Profissional, Habilidades, Certificações e Aprendizado.</p>
+                </div>
+                <div class="topic-card">
+                    <h3>🌟 Inspiração</h3>
+                    <p>Histórias de Sucesso, Motivação, Produtividade e Desenvolvimento Pessoal.</p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="benefits-grid" style="margin-top: 3rem;">
-                <div class="benefit-card">
-                    <div class="benefit-icon">🤖</div>
-                    <h3>IA Avançada</h3>
-                    <p>Powered by GPT-3.5-turbo. Cria conteúdo original, relevante e de alta qualidade.</p>
+    <!-- How It Works -->
+    <section class="how-it-works" id="como-funciona">
+        <div class="section-container">
+            <h2 class="section-title">Como Funciona?</h2>
+            <p class="section-subtitle">Simples, rápido e fácil de começar</p>
+            
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Clique no Botão</h3>
+                    <p>Clique em "Começar Agora" e abra o WhatsApp.</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">⏰</div>
-                    <h3>Agendamento</h3>
-                    <p>Agende envios para horários específicos. Deixe o MindFlow trabalhar enquanto você dorme.</p>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Envie uma Mensagem</h3>
+                    <p>Envie uma mensagem simples para se conectar.</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">📈</div>
-                    <h3>Relatórios</h3>
-                    <p>Acompanhe performance, engajamento e ROI com relatórios detalhados e acionáveis.</p>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Receba Conteúdo</h3>
+                    <p>Comece a receber conteúdo de qualidade diariamente.</p>
                 </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🔒</div>
-                    <h3>Segurança</h3>
-                    <p>Seus dados são protegidos com encriptação de nível empresarial e conformidade LGPD.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🌍</div>
-                    <h3>Multi-idioma</h3>
-                    <p>Crie conteúdo em português, inglês, espanhol e mais idiomas automaticamente.</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🔗</div>
-                    <h3>Integrações</h3>
-                    <p>Conecte com suas ferramentas favoritas. API aberta para customizações ilimitadas.</p>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Avalie e Personalize</h3>
+                    <p>Avalie o conteúdo para receber mais do que você gosta.</p>
                 </div>
             </div>
         </div>
@@ -586,49 +668,49 @@
     <!-- Testimonials Section -->
     <section class="testimonials" id="depoimentos">
         <div class="section-container">
-            <h2 class="section-title">O que nossos clientes dizem</h2>
-            <p class="section-subtitle">Histórias reais de sucesso com MindFlow</p>
+            <h2 class="section-title">O que Nossos Usuários Dizem</h2>
+            <p class="section-subtitle">Histórias reais de pessoas que estão crescendo com MindFlow</p>
             
             <div class="testimonials-grid">
                 <div class="testimonial-card">
                     <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-text">
-                        "MindFlow aumentou meu engajamento em 300% em apenas 2 meses. Meus clientes adoram o conteúdo personalizado!"
+                        "MindFlow me mantém atualizado sobre tecnologia sem perder tempo. O conteúdo é sempre relevante e bem estruturado!"
                     </p>
-                    <p class="testimonial-author">— João Silva, Consultor</p>
+                    <p class="testimonial-author">— Ana Silva, Desenvolvedora</p>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-text">
-                        "Economizei 20 horas por semana em criação de conteúdo. Agora foco no que realmente importa: vender."
+                        "Comecei a receber conteúdo sobre negócios e em 3 meses consegui implementar 2 estratégias que aumentaram minha receita!"
                     </p>
-                    <p class="testimonial-author">— Maria Santos, Empreendedora</p>
+                    <p class="testimonial-author">— Carlos Oliveira, Empreendedor</p>
                 </div>
                 <div class="testimonial-card">
                     <div class="testimonial-stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-text">
-                        "A qualidade do conteúdo gerado é impressionante. Meus leads agora chegam muito mais qualificados."
+                        "A melhor forma de aprender no meu tempo livre. Conteúdo de qualidade, direto no WhatsApp, sem distrações."
                     </p>
-                    <p class="testimonial-author">— Carlos Oliveira, Gerente de Marketing</p>
+                    <p class="testimonial-author">— Maria Santos, Gerente de Marketing</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta-section" id="contato">
+    <section class="cta-section">
         <div class="section-container">
-            <h2>Pronto para Transformar seu Conteúdo?</h2>
-            <p>Comece agora e veja resultados em 7 dias. Sem cartão de crédito necessário.</p>
-            <button class="btn btn-primary" onclick="window.location.href='https://wa.me/5533988421335?text=Olá! Gostaria de começar com o MindFlow agora!'">
-                💬 Fale com a Gente no WhatsApp
+            <h2>Pronto para Começar?</h2>
+            <p>Junte-se a milhares de profissionais que estão crescendo com MindFlow. Comece agora!</p>
+            <button class="btn btn-primary" onclick="window.location.href='https://wa.me/5533988421335?text=Olá! Quero receber conteúdo diário de qualidade no MindFlow'">
+                💬 Conectar no WhatsApp
             </button>
         </div>
     </section>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/5533988421335?text=Olá! Tenho interesse em conhecer o MindFlow" class="whatsapp-button" title="Fale conosco no WhatsApp">
-        <div class="whatsapp-tooltip">Fale conosco!</div>
+    <a href="https://wa.me/5533988421335?text=Olá! Quero receber conteúdo diário de qualidade no MindFlow" class="whatsapp-button" title="Fale conosco no WhatsApp">
+        <div class="whatsapp-tooltip">Conecte agora!</div>
         <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a9.87 9.87 0 00-4.773 1.149c-1.468.694-2.717 1.662-3.638 2.872a9.9 9.9 0 00-1.387 3.283 9.889 9.889 0 001.519 9.694 9.905 9.905 0 004.782 2.913 9.868 9.868 0 003.85.235 9.902 9.902 0 003.39-1.062 9.91 9.91 0 002.531-2.14 9.88 9.88 0 001.387-3.283 9.89 9.89 0 00-1.519-9.694 9.905 9.905 0 00-4.782-2.913 9.868 9.868 0 00-3.85-.235z"/>
         </svg>
@@ -654,7 +736,7 @@
         // Track conversions
         document.querySelectorAll('.btn-primary, .whatsapp-button').forEach(btn => {
             btn.addEventListener('click', function() {
-                console.log('Conversion tracked');
+                console.log('User initiated WhatsApp connection');
             });
         });
     </script>
