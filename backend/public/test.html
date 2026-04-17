@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindFlow - Teste de API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #00d4ff, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section {
+            background: #1a1f3a;
+            border: 1px solid #2d3561;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .section h2 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #8b92b8;
+            font-size: 0.9em;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: #0a0e27;
+            color: #fff;
+            border: 1px solid #2d3561;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 1em;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #00d4ff;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+        
+        button {
+            background: #10b981;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .response {
+            background: #0a0e27;
+            border: 1px solid #2d3561;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85em;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        
+        .success {
+            color: #10b981;
+        }
+        
+        .error {
+            color: #ef4444;
+        }
+        
+        .info {
+            color: #00d4ff;
+        }
+        
+        .rating {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .star {
+            font-size: 2em;
+            cursor: pointer;
+            opacity: 0.3;
+            transition: opacity 0.2s;
+        }
+        
+        .star:hover,
+        .star.active {
+            opacity: 1;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 MindFlow - Teste de API</h1>
+        
+        <div class="grid">
+            <!-- Envio Imediato -->
+            <div class="section">
+                <h2>✉️ Enviar Agora</h2>
+                <div class="form-group">
+                    <label>Content ID:</label>
+                    <input type="text" id="sendContentId" placeholder="UUID do conteúdo" value="0d14968b-bc64-482c-b593-ec6a4f3f23a5">
+                </div>
+                <button onclick="sendNow()">Enviar Imediatamente</button>
+                <div id="sendResponse" class="response" style="display: none;"></div>
+            </div>
+            
+            <!-- Feedback -->
+            <div class="section">
+                <h2>⭐ Registrar Feedback</h2>
+                <div class="form-group">
+                    <label>Content ID:</label>
+                    <input type="text" id="feedbackContentId" placeholder="UUID do conteúdo" value="0d14968b-bc64-482c-b593-ec6a4f3f23a5">
+                </div>
+                <div class="form-group">
+                    <label>Contact ID:</label>
+                    <input type="text" id="feedbackContactId" placeholder="UUID do contato" value="test-contact">
+                </div>
+                <div class="form-group">
+                    <label>Avaliação (1-5 estrelas):</label>
+                    <div class="rating" id="ratingContainer">
+                        <span class="star" onclick="setRating(1)">⭐</span>
+                        <span class="star" onclick="setRating(2)">⭐</span>
+                        <span class="star" onclick="setRating(3)">⭐</span>
+                        <span class="star" onclick="setRating(4)">⭐</span>
+                        <span class="star" onclick="setRating(5)">⭐</span>
+                    </div>
+                    <input type="hidden" id="feedbackRating" value="0">
+                </div>
+                <div class="form-group">
+                    <label>Comentário (opcional):</label>
+                    <textarea id="feedbackText" placeholder="Deixe seu feedback..." rows="3"></textarea>
+                </div>
+                <button onclick="submitFeedback()">Enviar Feedback</button>
+                <div id="feedbackResponse" class="response" style="display: none;"></div>
+            </div>
+            
+            <!-- Preferências -->
+            <div class="section">
+                <h2>📊 Obter Preferências</h2>
+                <div class="form-group">
+                    <label>Contact ID:</label>
+                    <input type="text" id="preferencesContactId" placeholder="UUID do contato" value="test-contact">
+                </div>
+                <button onclick="getPreferences()">Obter Preferências</button>
+                <div id="preferencesResponse" class="response" style="display: none;"></div>
+            </div>
+            
+            <!-- Status -->
+            <div class="section">
+                <h2>🔍 Status da API</h2>
+                <button onclick="checkHealth()">Verificar Status</button>
+                <div id="healthResponse" class="response" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost:3001';
+        const TOKEN = localStorage.getItem('token') || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjYTk3MzBhNC03MGYzLTQwOGItYmQzMy0zZTI5ZDU5NmRlMjgiLCJpYXQiOjE3NzYzODM3OTEsImV4cCI6MTc3Njk4ODU5MX0.HKJl0AYf4s1OKHdS5BvyhImFtHkjJNJrOcDBCpPvP0Q';
+        
+        let selectedRating = 0;
+        
+        function setRating(rating) {
+            selectedRating = rating;
+            document.getElementById('feedbackRating').value = rating;
+            
+            const stars = document.querySelectorAll('#ratingContainer .star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+        
+        async function sendNow() {
+            const contentId = document.getElementById('sendContentId').value;
+            const responseDiv = document.getElementById('sendResponse');
+            
+            try {
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = '<span class="info">Enviando...</span>';
+                
+                const response = await fetch(`${API_URL}/api/immediate/send-all`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TOKEN}`
+                    },
+                    body: JSON.stringify({ contentId })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<span class="success">✅ Sucesso!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                } else {
+                    responseDiv.innerHTML = `<span class="error">❌ Erro!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+            }
+        }
+        
+        async function submitFeedback() {
+            const contentId = document.getElementById('feedbackContentId').value;
+            const contactId = document.getElementById('feedbackContactId').value;
+            const rating = parseInt(document.getElementById('feedbackRating').value);
+            const feedback = document.getElementById('feedbackText').value;
+            const responseDiv = document.getElementById('feedbackResponse');
+            
+            if (rating === 0) {
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = '<span class="error">❌ Selecione uma avaliação!</span>';
+                return;
+            }
+            
+            try {
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = '<span class="info">Enviando feedback...</span>';
+                
+                const response = await fetch(`${API_URL}/api/immediate/feedback`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${TOKEN}`
+                    },
+                    body: JSON.stringify({ contentId, contactId, rating, feedback })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<span class="success">✅ Feedback registrado!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                    document.getElementById('feedbackText').value = '';
+                    setRating(0);
+                } else {
+                    responseDiv.innerHTML = `<span class="error">❌ Erro!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+            }
+        }
+        
+        async function getPreferences() {
+            const contactId = document.getElementById('preferencesContactId').value;
+            const responseDiv = document.getElementById('preferencesResponse');
+            
+            try {
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = '<span class="info">Carregando preferências...</span>';
+                
+                const response = await fetch(`${API_URL}/api/immediate/preferences/${contactId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${TOKEN}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<span class="success">✅ Preferências carregadas!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                } else {
+                    responseDiv.innerHTML = `<span class="error">❌ Erro!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+            }
+        }
+        
+        async function checkHealth() {
+            const responseDiv = document.getElementById('healthResponse');
+            
+            try {
+                responseDiv.style.display = 'block';
+                responseDiv.innerHTML = '<span class="info">Verificando status...</span>';
+                
+                const response = await fetch(`${API_URL}/health`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    responseDiv.innerHTML = `<span class="success">✅ API Online!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                } else {
+                    responseDiv.innerHTML = `<span class="error">❌ Erro!\n\n${JSON.stringify(data, null, 2)}</span>`;
+                }
+            } catch (error) {
+                responseDiv.innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+            }
+        }
+        
+        // Verificar status ao carregar
+        window.addEventListener('load', checkHealth);
+    </script>
+</body>
+</html>

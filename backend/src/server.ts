@@ -16,6 +16,7 @@ export async function startServer() {
   app.use(helmet())
   app.use(cors())
   app.use(express.json())
+  app.use(express.static('public'))
 
   // Rate limiting
   const limiter = rateLimit({
@@ -45,6 +46,11 @@ export async function startServer() {
   app.use('/api/content', (await import('./routes/content.js')).default)
   app.use('/api/immediate', (await import('./routes/immediate.js')).default)
   app.use('/api/webhooks', webhookRoutes)
+
+  // Serve test page
+  app.get('/test', (req, res) => {
+    res.sendFile(new URL('../public/test.html', import.meta.url).pathname)
+  })
 
   // Health check
   app.get('/health', (req, res) => {
