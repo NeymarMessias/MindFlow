@@ -23,6 +23,7 @@
     "helmet": "^7.1.0",
     "jsonwebtoken": "^9.0.3",
     "mysql2": "^3.10.0",
+    "node-cron": "^4.2.1",
     "openai": "^6.34.0",
     "redis": "^4.7.0",
     "typescript": "^5.4.0",

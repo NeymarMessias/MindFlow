@@ -112,8 +112,15 @@ export class StatsService {
   async getScheduleStats(userId: string) {
     try {
       const db = getDatabase()
-
-      const schedulesList = await db.query.schedules.findMany()
+      
+      // Tentar buscar agendamentos com Drizzle
+      let schedulesList: any[] = []
+      try {
+        schedulesList = await db.select().from(schedules)
+      } catch (drizzleError) {
+        logger.warn('Drizzle query failed, returning empty stats:', drizzleError)
+        schedulesList = []
+      }
 
       const stats = {
         total: schedulesList.length,
@@ -125,7 +132,13 @@ export class StatsService {
       return stats
     } catch (error) {
       logger.error('Erro ao obter estatísticas de agendamentos:', error)
-      throw error
+      // Retornar stats vazias em caso de erro
+      return {
+        total: 0,
+        pending: 0,
+        sent: 0,
+        failed: 0,
+      }
     }
   }
 

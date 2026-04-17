@@ -7,6 +7,7 @@ import { config } from './config/config.js'
 import { logger } from './utils/logger.js'
 import authRoutes from './routes/auth.js'
 import webhookRoutes from './routes/webhooks.js'
+import { schedulerService } from './services/schedulerService.js'
 
 export async function startServer() {
   const app = express()
@@ -63,5 +64,8 @@ export async function startServer() {
   app.listen(config.server.port, () => {
     logger.info(`✅ Server running on port ${config.server.port}`)
     logger.info(`🌍 Environment: ${config.server.nodeEnv}`)
+    
+    // Iniciar scheduler de envios automáticos
+    schedulerService.start()
   })
 }
